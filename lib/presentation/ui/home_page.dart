@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_4/widgets/main_layout.dart';
 import '../provider/case_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -20,19 +21,7 @@ class _HomePageState extends State<HomePage> {
 
     // final caseItem = provider.cases[0];
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Case Covid-19 In The World",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
+    return MainLayout(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: GridView.builder(
@@ -45,26 +34,31 @@ class _HomePageState extends State<HomePage> {
           itemCount: provider.cases.length,
           itemBuilder: (context, index) {
             final caseItem = provider.cases[index];
-            return Container(
-              height: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.white,
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    Image.network(caseItem.flag, height: 80, width: 80),
-                    SizedBox(height: 20),
-                    Text(
-                      caseItem.country,
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                    Text(
-                      caseItem.cases.toString(),
-                      style: TextStyle(fontSize: 14, color: Colors.red),
-                    ),
-                  ],
+            return GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/detail', arguments: caseItem);
+              },
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Image.network(caseItem.flag, height: 80, width: 80),
+                      SizedBox(height: 20),
+                      Text(
+                        caseItem.country,
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                      ),
+                      Text(
+                        caseItem.cases.toString(),
+                        style: TextStyle(fontSize: 14, color: Colors.red),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
